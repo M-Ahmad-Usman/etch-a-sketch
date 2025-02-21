@@ -5,7 +5,7 @@
 #container {
     width: 80vmin;
     height: 80vmin;
-    margin: auto;
+    margin: 20px auto;
 }
 
 .row-div {
@@ -14,4 +14,8 @@
 
 .column-div {
     border: 1px solid black;
+}
+
+#grid-size-div {
+    text-align: center;
 }
