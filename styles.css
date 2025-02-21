@@ -1,0 +1,17 @@
+* {
+    box-sizing: border-box;
+}
+
+#container {
+    width: 400px;
+    height: 400px;
+    margin: auto;
+}
+
+.row-div {
+    display: flex;
+}
+
+.column-div {
+    border: 1px solid black;
+}
