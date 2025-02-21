@@ -1,3 +1,17 @@
+// Returns random rgb color in string
+function getRandomColor() {
+    return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+}
+
+function addHoverEffect(element) {
+    if (!(element instanceof HTMLElement))
+        return "Element is not an HTML element";
+
+    element.addEventListener(`mouseenter`, ()=> {
+        element.style.backgroundColor = `${getRandomColor()}`;
+    });
+}
+
 let container = document.querySelector("#container");
 const gridSize = 16;
 
@@ -15,6 +29,9 @@ for (let i = 0; i < gridSize; i++) {
         // Setting the size of divs
         columnDiv.style.cssText = `width: ${container.offsetWidth / gridSize}px; height: ${container.offsetHeight / gridSize}px;`;
         
+        // Adding hover effect on div
+        addHoverEffect(columnDiv);
+
         // Appending the divs to their respective row
         rowDiv.appendChild(columnDiv);
     }
