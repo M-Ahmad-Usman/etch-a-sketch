@@ -7,8 +7,10 @@ function addHoverEffect(element) {
     if (!(element instanceof HTMLElement))
         return "Element is not an HTML element";
 
-    element.addEventListener(`mouseenter`, () => {
-        element.style.backgroundColor = `${getRandomColor()}`;
+    // Capture mouseover effect of column divs on container element using event delegation
+    element.addEventListener(`mouseover`, (e) => {
+        let targetDiv = e.target;
+        targetDiv.style.backgroundColor = getRandomColor();
     });
 }
 
@@ -47,9 +49,6 @@ function generateGrid(gridSize = 12) {
             // Setting the size of divs
             columnDiv.style.cssText = `width: ${container.offsetWidth / gridSize}px; height: ${container.offsetHeight / gridSize}px;`;
 
-            // Adding hover effect on div
-            addHoverEffect(columnDiv);
-
             // Appending the divs to their respective row
             rowDiv.appendChild(columnDiv);
         }
@@ -70,3 +69,4 @@ gridSizeBtn.addEventListener("click", ()=>{
 });
 
 generateGrid();
+addHoverEffect(document.querySelector("#container"));
