@@ -5,7 +5,6 @@
 #container {
     width: 80vmin;
     height: 80vmin;
-    margin: 20px auto;
 }
 
 .row-div {
@@ -16,6 +15,30 @@
     border: 1px solid black;
 }
 
-#grid-size-div {
-    text-align: center;
+#main {
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.btn {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn button {
+    font-size: 1rem;
+}
+
+@media screen and (max-width: 720px) {
+    .btn {
+        flex-direction: row;
+        gap: 10px;
+    }
 }
