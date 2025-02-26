@@ -36,6 +36,10 @@
     font-size: 1rem;
 }
 
+h1 {
+    text-align: center;
+}
+
 @media screen and (max-width: 720px) {
     .btn {
         flex-direction: row;
