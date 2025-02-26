@@ -3,35 +3,35 @@ function getRandomColor() {
     return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
 }
 
-function addHoverEffect(element) {
-    if (!(element instanceof HTMLElement))
-        return "Element is not an HTML element";
+function addHoverEffect(color) {
+    let container = document.querySelector("#container");
 
-    // Capture mouseover effect of column divs on container element using event delegation
-    element.addEventListener(`mouseover`, (e) => {
+    // Capture mouseover effect on column divs of container element using event delegation
+    container.addEventListener(`mouseover`, (e) => {
         let targetDiv = e.target;
-        targetDiv.style.backgroundColor = getRandomColor();
+        // If some color is given then use that color else generate random colors
+        targetDiv.style.backgroundColor = color ?? getRandomColor();
     });
 }
 
-// Returns an integer for grid size. If user cancels then returns null or if user enters empty string then returns that string
+// Returns an integer for grid size. If user cancels or enters an empty string then returns false
 function getGridSize() {
-
     let size;
 
     while (!(size > 0 && size <= 50 && size != NaN)) {
         size = prompt("Enter Grid Size of less than 51: ", 12);
 
         if (size)
-            size = parseInt(size);
+            gridSize = parseInt(size);
         else
-            return size;
+            return false;
     }
 
-    return size;
+    return true;
 }
 
-function generateGrid(gridSize = 12) {
+// Generates grid of current value of global gridSize variable
+function generateGrid() {
     let container = document.querySelector("#container");
     container.textContent = "";
 
@@ -58,15 +58,46 @@ function generateGrid(gridSize = 12) {
     }
 }
 
-let gridSizeBtn = document.querySelector("#grid-size-btn");
+// Variables
+let defaultClr = `rgb(255, 153, 0)`;
+let gridSize = 12;
 
-// Generates a new grid if user has given a valid size. else do nothing
+// Adding event listeners to buttons
+let gridSizeBtn = document.querySelector("#grid-size-btn");
+let changeClrBtn = document.querySelector("#change-clr-btn");
+let randomizeClrBtn = document.querySelector("#randomize-clr-btn");
+let clearBtn = document.querySelector("#clear-btn");
+
+// Generates a new grid if user has given a valid size.
 gridSizeBtn.addEventListener("click", ()=>{
-    let size = getGridSize();
-    if (size) {
-        generateGrid(size);
-    } 
+    if (getGridSize()) {
+        generateGrid();
+    }
+});
+
+// Takes color input and calls addHoverEffect with the selected color
+changeClrBtn.addEventListener("click", ()=>{
+    let clrInput = document.createElement("input");
+    clrInput.type = "color";
+
+    // Add oninput listener so that selected color will be passed to addHoverEffect()
+    clrInput.oninput = () => {
+        addHoverEffect(clrInput.value);
+    }
+
+    // Dispatch click event to get user defined color
+    clrInput.click();
+});
+
+// Randomizes color changes on hover on divs
+randomizeClrBtn.addEventListener("click", ()=>{
+    addHoverEffect();
+});
+
+// Generates a new grid of current grid size (stored in global gridSize)
+clearBtn.addEventListener("click", ()=>{
+    generateGrid();
 });
 
 generateGrid();
-addHoverEffect(document.querySelector("#container"));
+addHoverEffect(defaultClr);
