@@ -3,14 +3,28 @@ function getRandomColor() {
     return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
 }
 
-function addHoverEffect(color) {
+function draw(color) {
     let container = document.querySelector("#container");
+
+    // Adding two event listeners to draw on mouse click
 
     // Capture mouseover effect on column divs of container element using event delegation
     container.addEventListener(`mouseover`, (e) => {
         let targetDiv = e.target;
-        // If some color is given then use that color else generate random colors
-        targetDiv.style.backgroundColor = color ?? getRandomColor();
+        if (e.buttons == 1) {
+            // If some color is given then use that color else generate random colors
+            targetDiv.style.backgroundColor = color ?? getRandomColor();
+        }
+    });
+
+    // Change color on mouse down
+    container.addEventListener(`mousedown`, (e) => {
+        let targetDiv = e.target;
+        if (e.buttons == 0) {
+            // If some color is given then use that color else generate random colors
+            targetDiv.style.backgroundColor = color ?? getRandomColor();
+        }
+
     });
 }
 
@@ -69,20 +83,20 @@ let randomizeClrBtn = document.querySelector("#randomize-clr-btn");
 let clearBtn = document.querySelector("#clear-btn");
 
 // Generates a new grid if user has given a valid size.
-gridSizeBtn.addEventListener("click", ()=>{
+gridSizeBtn.addEventListener("click", () => {
     if (getGridSize()) {
         generateGrid();
     }
 });
 
 // Takes color input and calls addHoverEffect with the selected color
-changeClrBtn.addEventListener("click", ()=>{
+changeClrBtn.addEventListener("click", () => {
     let clrInput = document.createElement("input");
     clrInput.type = "color";
 
     // Add oninput listener so that selected color will be passed to addHoverEffect()
     clrInput.oninput = () => {
-        addHoverEffect(clrInput.value);
+        draw(clrInput.value);
     }
 
     // Dispatch click event to get user defined color
@@ -90,14 +104,14 @@ changeClrBtn.addEventListener("click", ()=>{
 });
 
 // Randomizes color changes on hover on divs
-randomizeClrBtn.addEventListener("click", ()=>{
-    addHoverEffect();
+randomizeClrBtn.addEventListener("click", () => {
+    draw();
 });
 
 // Generates a new grid of current grid size (stored in global gridSize)
-clearBtn.addEventListener("click", ()=>{
-    generateGrid();
+clearBtn.addEventListener("click", () => {
+    draw();
 });
 
 generateGrid();
-addHoverEffect(defaultClr);
+draw(defaultClr);
