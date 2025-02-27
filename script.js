@@ -20,7 +20,7 @@ function draw(color) {
     // Change color on mouse down
     container.addEventListener(`mousedown`, (e) => {
         let targetDiv = e.target;
-        if (e.buttons == 0) {
+        if (e.buttons == 1) {
             // If some color is given then use that color else generate random colors
             targetDiv.style.backgroundColor = color ?? getRandomColor();
         }
