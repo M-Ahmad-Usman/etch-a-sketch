@@ -110,7 +110,7 @@ randomizeClrBtn.addEventListener("click", () => {
 
 // Generates a new grid of current grid size (stored in global gridSize)
 clearBtn.addEventListener("click", () => {
-    draw();
+    generateGrid();
 });
 
 generateGrid();
