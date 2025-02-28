@@ -1,19 +1,28 @@
-// Returns random rgb color in string
+// Returns random rgba color in string
 function getRandomColor() {
-    return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+    return `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.1)`;
 }
 
 function draw(color) {
     let container = document.querySelector("#container");
 
-    // Adding two event listeners to draw on mouse click
-
     // Capture mouseover effect on column divs of container element using event delegation
+    // If main mouse button is pressed then change color else darken the color
     container.addEventListener(`mouseover`, (e) => {
         let targetDiv = e.target;
         if (e.buttons == 1) {
-            // If some color is given then use that color else generate random colors
+            // If some color is given then use that color else use a random color
             targetDiv.style.backgroundColor = color ?? getRandomColor();
+        }
+        // Increase opacity on hover only for default and random colors
+        else {
+            let bgColor = targetDiv.style.backgroundColor;
+            // If background is defined and is some rgba color.
+            if (bgColor && bgColor.at(3) === "a") {
+                let opacity = parseFloat(bgColor.slice(-4));
+                opacity += 0.1;
+                targetDiv.style.backgroundColor = bgColor.slice(0,-4) + opacity + ")";
+            }
         }
     });
 
@@ -73,7 +82,7 @@ function generateGrid() {
 }
 
 // Variables
-let defaultClr = `rgb(255, 153, 0)`;
+let defaultClr = `rgba(255, 153, 0, 0.1)`;
 let gridSize = 12;
 
 // Adding event listeners to buttons
