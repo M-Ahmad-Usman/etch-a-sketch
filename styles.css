@@ -15,7 +15,7 @@
     border: 1px solid black;
 }
 
-#main {
+main {
     margin-top: 60px;
     display: flex;
     justify-content: space-evenly;
