@@ -117,12 +117,12 @@ gridSizeBtn.addEventListener("click", () => {
 
 });
 
-// Takes color input and calls addHoverEffect with the selected color
+// Takes color input and passes the selected color to draw.
 changeClrBtn.addEventListener("click", () => {
     let clrInput = document.createElement("input");
     clrInput.type = "color";
 
-    // Add oninput listener so that selected color will be passed to addHoverEffect()
+    // Add oninput listener so that selected color will be passed to draw()
     clrInput.oninput = () => {
         draw(clrInput.value);
     }
@@ -132,19 +132,13 @@ changeClrBtn.addEventListener("click", () => {
 });
 
 // Randomizes color changes on hover on divs
-randomizeClrBtn.addEventListener("click", () => {
-    draw();
-});
+randomizeClrBtn.addEventListener("click", () => draw());
 
 // Generates a new grid of current grid size (stored in global gridSize)
-clearBtn.addEventListener("click", () => {
-    generateGrid();
-});
+clearBtn.addEventListener("click", () => generateGrid());
 
 // Erase color. Works in the same way as draw.
-eraseBtn.addEventListener("click", () => {
-    erase();
-});
+eraseBtn.addEventListener("click", () => erase());
 
 generateGrid(12);
 draw(defaultClr);
