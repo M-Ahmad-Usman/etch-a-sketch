@@ -6,9 +6,7 @@ function getRandomColor() {
 function draw(color) {
     let container = document.querySelector("#container");
 
-    // Adding two event listeners to draw on mouse click
-
-    // Capture mouseover effect on column divs of container element using event delegation
+    // Simulate dragging effect. Color multiple cells on drag if primary mouse button is clicked.
     container.addEventListener(`mouseover`, (e) => {
         let targetDiv = e.target;
         if (e.buttons == 1) {
@@ -17,7 +15,9 @@ function draw(color) {
         }
     });
 
-    // Change color on mouse down
+    /* Here mousedown event is used instead of click because 
+    mousedown doesn't wait for the mouse keys to be released, 
+    hence the user can drag to color multiple cells */
     container.addEventListener(`mousedown`, (e) => {
         let targetDiv = e.target;
         if (e.buttons == 1) {
