@@ -101,7 +101,7 @@ let defaultClr = `rgb(255, 153, 0)`;
 let gridSizeBtn = document.querySelector("#grid-size-btn");
 let changeClrBtn = document.querySelector("#change-clr-btn");
 let randomizeClrBtn = document.querySelector("#randomize-clr-btn");
-let clearBtn = document.querySelector("#clear-btn");
+let resetBtn = document.querySelector("#reset-btn");
 let eraseBtn = document.querySelector("#erase-btn");
 
 // Generates a new grid if user has given a valid size.
@@ -134,7 +134,7 @@ changeClrBtn.addEventListener("click", () => {
 randomizeClrBtn.addEventListener("click", () => draw());
 
 // Generates a new grid of current grid size (stored in global gridSize)
-clearBtn.addEventListener("click", () => generateGrid());
+resetBtn.addEventListener("click", () => generateGrid());
 
 // Erase color. Works in the same way as draw.
 eraseBtn.addEventListener("click", () => erase());
