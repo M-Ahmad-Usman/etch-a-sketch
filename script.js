@@ -3,8 +3,9 @@ function getRandomColor() {
     return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
 }
 
+let container = document.querySelector("#container");
+
 function draw(color) {
-    let container = document.querySelector("#container");
 
     // Simulate dragging effect. Color multiple cells on drag if primary mouse button is clicked.
     container.addEventListener(`mouseover`, (e) => {
@@ -45,7 +46,6 @@ function getGridSize() {
 }
 
 function erase() {
-    let container = document.querySelector("#container");
 
     // Simulate dragging effect. Erase colors in multiple cells on drag if primary mouse button is clicked.
     container.addEventListener(`mouseover`, (e) => {
@@ -69,7 +69,6 @@ function erase() {
 
 // Generates grid of given size.
 function generateGrid(size=12) {
-    let container = document.querySelector("#container");
     container.textContent = "";
 
     for (let i = 0; i < size; i++) {
