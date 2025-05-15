@@ -28,40 +28,40 @@ function draw(color) {
     });
 }
 
-// Returns an integer for grid size. If user cancels or enters an empty string then returns false
+/* Validates the input and returns an integer for grid size. 
+If user cancels or enters an empty string then returns error. */
 function getGridSize() {
     let size;
 
-    while (!(size > 0 && size <= 50 && size != NaN)) {
-        size = prompt("Enter Grid Size of less than 51: ", 12);
+    while (true) {
 
-        if (size)
-            gridSize = parseInt(size);
-        else
-            return false;
+        size = Number(prompt("Enter the new size of grid. Size cannot be larger than 50.", 12));
+
+        if (size >= 1 && size <= 50)
+            return parseInt(size);
+        else if (size == null || size == 0)
+            throw new Error("User canceled the operation or entered an empty string.");
     }
-
-    return true;
 }
 
-// Generates grid of current value of global gridSize variable
-function generateGrid() {
+// Generates grid of given size.
+function generateGrid(size=12) {
     let container = document.querySelector("#container");
     container.textContent = "";
 
-    for (let i = 0; i < gridSize; i++) {
+    for (let i = 0; i < size; i++) {
 
         // Creating a div row which will contain 16 divs
         let rowDiv = document.createElement("div");
         rowDiv.setAttribute("class", "row-div");
 
-        for (let j = 0; j < gridSize; j++) {
+        for (let j = 0; j < size; j++) {
             // Creatinng column divs
             let columnDiv = document.createElement("div");
             columnDiv.setAttribute("class", "column-div");
 
             // Setting the size of divs
-            columnDiv.style.cssText = `width: ${container.offsetWidth / gridSize}px; height: ${container.offsetHeight / gridSize}px;`;
+            columnDiv.style.cssText = `width: ${container.offsetWidth / size}px; height: ${container.offsetHeight / size}px;`;
 
             // Appending the divs to their respective row
             rowDiv.appendChild(columnDiv);
@@ -74,7 +74,6 @@ function generateGrid() {
 
 // Variables
 let defaultClr = `rgb(255, 153, 0)`;
-let gridSize = 12;
 
 // Adding event listeners to buttons
 let gridSizeBtn = document.querySelector("#grid-size-btn");
@@ -84,9 +83,14 @@ let clearBtn = document.querySelector("#clear-btn");
 
 // Generates a new grid if user has given a valid size.
 gridSizeBtn.addEventListener("click", () => {
-    if (getGridSize()) {
-        generateGrid();
+    let size;
+    try {
+        size = getGridSize();
+    } catch (error) {
+        return;
     }
+    generateGrid(size);
+
 });
 
 // Takes color input and calls addHoverEffect with the selected color
@@ -113,5 +117,5 @@ clearBtn.addEventListener("click", () => {
     generateGrid();
 });
 
-generateGrid();
+generateGrid(12);
 draw(defaultClr);
