@@ -27,13 +27,14 @@
 .btn {
     display: flex;
     flex-flow: column wrap;
-    align-items: center;
     justify-content: center;
     gap: 20px;
 }
 
 .btn button {
     font-size: 1rem;
+    border-radius: 8px;
+    padding: 0.5rem;
 }
 
 h1 {
