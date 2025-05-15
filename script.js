@@ -4,29 +4,44 @@ function getRandomColor() {
 }
 
 let container = document.querySelector("#container");
+// Keep references to handlers so the previous ones can be removed before adding new ones.
+let mouseOverHandler = null;
+let mouseDownHandler = null;
+
+function clearListeners() {
+    if (mouseOverHandler) container.removeEventListener("mouseover", mouseOverHandler);
+    if (mouseDownHandler) container.removeEventListener("mousedown", mouseDownHandler);
+    mouseOverHandler = null;
+    mouseDownHandler = null;
+}
 
 function draw(color) {
 
-    // Simulate dragging effect. Color multiple cells on drag if primary mouse button is clicked.
-    container.addEventListener(`mouseover`, (e) => {
+    clearListeners();
+
+    mouseOverHandler = function (e) {
         let targetDiv = e.target;
         if (e.buttons == 1) {
             // If some color is given then use that color else generate random colors
             targetDiv.style.backgroundColor = color ?? getRandomColor();
         }
-    });
+    }
+    // Simulate dragging effect. Color multiple cells on drag if primary mouse button is clicked.
+    container.addEventListener(`mouseover`, mouseOverHandler);
 
+
+
+    mouseDownHandler = function (e) {
+        let targetDiv = e.target;
+        if (e.buttons == 1) {
+            // If some color is given then use that color else generate random colors
+            targetDiv.style.backgroundColor = color ?? getRandomColor();
+        }
+    }
     /* Here mousedown event is used instead of click because 
     mousedown doesn't wait for the mouse keys to be released, 
     hence the user can drag to color multiple cells */
-    container.addEventListener(`mousedown`, (e) => {
-        let targetDiv = e.target;
-        if (e.buttons == 1) {
-            // If some color is given then use that color else generate random colors
-            targetDiv.style.backgroundColor = color ?? getRandomColor();
-        }
-
-    });
+    container.addEventListener(`mousedown`, mouseDownHandler);
 }
 
 /* Validates the input and returns an integer for grid size. 
@@ -46,25 +61,30 @@ function getGridSize() {
 }
 
 function erase() {
+    clearListeners();
 
-    // Simulate dragging effect. Erase colors in multiple cells on drag if primary mouse button is clicked.
-    container.addEventListener(`mouseover`, (e) => {
+    mouseOverHandler = function (e) {
         let targetDiv = e.target;
         if (e.buttons == 1) {
             targetDiv.style.backgroundColor = "#fff";
         }
-    });
+    };
+
+    // Simulate dragging effect. Erase colors in multiple cells on drag if primary mouse button is clicked.
+    container.addEventListener(`mouseover`, mouseOverHandler);
+
+
+    mouseDownHandler = function (e) {
+        let targetDiv = e.target;
+        if (e.buttons == 1) {
+            targetDiv.style.backgroundColor = "#fff";
+        }
+    };
 
     /* Here mousedown event is used instead of click because 
     mousedown doesn't wait for the mouse keys to be released, 
     hence the user can drag to erase multiple cells in one go. */
-    container.addEventListener(`mousedown`, (e) => {
-        let targetDiv = e.target;
-        if (e.buttons == 1) {
-            targetDiv.style.backgroundColor = "#fff";
-        }
-
-    });
+    container.addEventListener(`mousedown`, mouseDownHandler);
 }
 
 // Generates grid of given size.
