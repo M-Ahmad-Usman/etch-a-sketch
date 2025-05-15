@@ -44,6 +44,29 @@ function getGridSize() {
     }
 }
 
+function erase() {
+    let container = document.querySelector("#container");
+
+    // Simulate dragging effect. Erase colors in multiple cells on drag if primary mouse button is clicked.
+    container.addEventListener(`mouseover`, (e) => {
+        let targetDiv = e.target;
+        if (e.buttons == 1) {
+            targetDiv.style.backgroundColor = "#fff";
+        }
+    });
+
+    /* Here mousedown event is used instead of click because 
+    mousedown doesn't wait for the mouse keys to be released, 
+    hence the user can drag to erase multiple cells in one go. */
+    container.addEventListener(`mousedown`, (e) => {
+        let targetDiv = e.target;
+        if (e.buttons == 1) {
+            targetDiv.style.backgroundColor = "#fff";
+        }
+
+    });
+}
+
 // Generates grid of given size.
 function generateGrid(size=12) {
     let container = document.querySelector("#container");
@@ -80,6 +103,7 @@ let gridSizeBtn = document.querySelector("#grid-size-btn");
 let changeClrBtn = document.querySelector("#change-clr-btn");
 let randomizeClrBtn = document.querySelector("#randomize-clr-btn");
 let clearBtn = document.querySelector("#clear-btn");
+let eraseBtn = document.querySelector("#erase-btn");
 
 // Generates a new grid if user has given a valid size.
 gridSizeBtn.addEventListener("click", () => {
@@ -115,6 +139,11 @@ randomizeClrBtn.addEventListener("click", () => {
 // Generates a new grid of current grid size (stored in global gridSize)
 clearBtn.addEventListener("click", () => {
     generateGrid();
+});
+
+// Erase color. Works in the same way as draw.
+eraseBtn.addEventListener("click", () => {
+    erase();
 });
 
 generateGrid(12);
